@@ -7,17 +7,42 @@ import {
   Button,
   Typography,
   Snackbar,
+  Avatar,
 } from "@material-ui/core";
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
 import { yupResolver } from "@hookform/resolvers/yup";
 import validationSchema from "./validation";
 import api from "../../services/api";
 import useAuth from "../../hooks/useAuth";
 import { useCallback, useEffect, useState } from "react";
+import avatar from "../../components/images/profile.png"
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
+    height:"100vh"
   },
+  ava: {
+    width: "100px",
+    height: "100px"
+  },
+  flex: {
+    display: "flex",
+    justifyContent: "space-between"
+  },
+  center:{
+    display: "flex",
+  
+  justifyContent: "center"
+  },
+  
 }));
 
 function Profile() {
@@ -72,69 +97,87 @@ function Profile() {
   }, [loadData]);
 
   return (
-    <Container maxWidth="xs" className={classes.root}>
-      <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <Typography variant="h6">Update profile</Typography>
+     <Container maxWidth="lg" className={classes.root}>
+        <Item>
+      <Grid container spacing={1}>
+       
+      <Grid item xs={4} className={classes.center}>
+        <Grid item xs={4} className={classes.center}>
+          <Avatar
+            alt="Remy Sharp"
+            src={avatar}
+            mt={{ width: 240, height: 240 }} className={classes.ava}
+          />
         </Grid>
       </Grid>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Controller
-              name="firstName"
-              control={control}
-              defaultValue=  {auth.user.firstName} 
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  error={Boolean(errors.firstName?.message)}
-                  fullWidth={true}
-                  label="First name"
-                  variant="filled"
-                  helperText={errors.firstName?.message}
-                />
-              )}
-            />
-          </Grid>
+      <Grid item xs={8} className={classes.center}>
+        <Grid item xs={8}>
 
-          <Grid item xs={12}>
-            <Controller
-              name="lastName"
-              control={control}
-              defaultValue={auth.user.lastName}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  error={Boolean(errors.lastName?.message)}
-                  fullWidth={true}
-                  label="Last name"
-                  variant="filled"
-                  helperText={errors.lastName?.message}
-                />
-              )}
-            />
-          </Grid>
 
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              disabled={isLoading}
-            >
-              Update
-            </Button>
-          </Grid>
+          <Typography gutterBottom variant="h6">Update profile</Typography>
+          <form onSubmit={handleSubmit(onSubmit)}>
+
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Controller
+                  name="firstName"
+                  control={control}
+                  defaultValue={auth.user.firstName}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      error={Boolean(errors.firstName?.message)}
+                      fullWidth={true}
+                      label="First name"
+                      variant="filled"
+                      helperText={errors.firstName?.message}
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Controller
+                  name="lastName"
+                  control={control}
+                  defaultValue={auth.user.lastName}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      error={Boolean(errors.lastName?.message)}
+                      fullWidth={true}
+                      label="Last name"
+                      variant="filled"
+                      helperText={errors.lastName?.message}
+                    />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  disabled={isLoading}
+                >
+                  Update
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+          <Snackbar
+            open={isOpen}
+            autoHideDuration={6000}
+            onClose={() => setIsOpen(false)}
+            message="Profile updated successfully"
+          />
         </Grid>
-      </form>
-      <Snackbar
-        open={isOpen}
-        autoHideDuration={6000}
-        onClose={() => setIsOpen(false)}
-        message="Profile updated successfully"
-      />
-    </Container>
+      </Grid>
+      
+      </Grid></Item>
+
+     </Container>
   );
 }
 

@@ -1,40 +1,39 @@
 import './App.css';
+import React from 'react';
 import './pages/login/Login';
 import Routes from "./routes/Routes/Routes";
-import useAuth from "./hooks/useAuth";
-import { useHistory } from "react-router-dom";
+import Header from './components/Header';
+import Footer from './components/Footer/Footer';
 import {
   makeStyles,
 } from "@material-ui/core";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+
   },
-  rightToolbar: {
-    flexGrow: 1,
-  },
-  title: {
-    marginRight: theme.spacing(2),
-  },
+  footer:{
+    position: "absolute",
+    left: "0",
+    bottom: "0",
+    width: "100%",
+    height: "80px",
+  }
+  
 }));
 
 function App() {
   const classes = useStyles();
-  const auth = useAuth();
-  const history = useHistory();
-
-  const onLogOut = () => {
-    auth.logOut();
-    history.push("/login");
-  };
 
   return (
-    <div className={classes.root}>
-    
 
-    <Routes />
-  </div>
+    <div className={classes.root}>
+      <Header />
+      <Footer className={classes.footer}/>
+    </div>
+
   );
 }
 

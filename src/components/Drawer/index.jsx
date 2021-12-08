@@ -20,6 +20,17 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
 const drawerWidth = 240;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    maxHeight: "477px",
+    maxWidth: "1207px",
+  },
+  box:{
+      background: "#CDD6DB",
+      opacity: ".9"
+  }
+
+}));
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -77,9 +88,9 @@ export default function PersistentDrawerLeft() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  const classes = useStyles();
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex' }} className={classes.box}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>

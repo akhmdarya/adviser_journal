@@ -8,12 +8,16 @@ import Profile from "../../pages/Profile";
 import useAuth from "../../hooks/useAuth";
 import PrivateRoute from "../../routes/PrivateRoute";
 import GuestRoute from "../../routes/GuestRoute";
+import Registration from "../../pages/registration/Registration";
+import NotFound from "../../pages/NotFound/NotFound";
 import {
   CircularProgress,
   makeStyles,
   Container,
   Grid,
 } from "@material-ui/core";
+import Groups from "../../pages/groups/Groups";
+import GroupDetails from "../../pages/groups/Details/GroupDetails";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,10 +39,30 @@ function Routes() {
         <PrivateRoute  path="/profile">
         <Profile />
       </PrivateRoute>
+      <PrivateRoute  path="/groups">
+        <Groups />
+      </PrivateRoute>
+      <PrivateRoute  path="/details/:group">
+        <GroupDetails />
+      </PrivateRoute>
+
+      <PrivateRoute  path="/profile_student/:student">
+        <GroupDetails />
+      </PrivateRoute>
 
       <GuestRoute  path="/login">
         <LoginPage />
       </GuestRoute>
+      <GuestRoute path="/registration">
+        <Registration />
+      </GuestRoute>
+      {/* <Route path="/not-found-404">
+        <NotFound />
+      </Route>
+      <Redirect to="/not-found-404" /> */}
+
+
+
        
       {/* <Route exact path="/">
         <Home />
@@ -55,10 +79,7 @@ function Routes() {
         <Registration />
       </GuestRoute>
 
-      <Route path="/not-found-404">
-        <NotFound />
-      </Route>
-      <Redirect to="/not-found-404" /> */}
+     */}
     </Switch>
   ) : (
     <Container maxWidth="md" className={classes.root}>
